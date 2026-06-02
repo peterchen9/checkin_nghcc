@@ -1,0 +1,30 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: checkin_nghcc_web
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    environment:
+      APP_ENV: "${APP_ENV:-local}"
+      APP_NAME: "${APP_NAME:-checkin_nghcc}"
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.4
+    container_name: checkin_nghcc_db
+    profiles:
+      - db
+    environment:
+      MYSQL_DATABASE: "${DB_NAME:-checkin_nghcc}"
+      MYSQL_USER: "${DB_USER:-checkin_user}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-change_me}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:-change_root_me}"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  db_data:
+
