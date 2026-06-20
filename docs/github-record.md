@@ -12,9 +12,10 @@
 
 - 前台參考：https://checkin.nghcc.org.tw/index.html
 - 後台參考：https://checkin.nghcc.org.tw/admin.html
+- 既有通訊錄來源：http://192.168.16.240:8001
 - 使用者提供的功能摘要與安全邊界要求。
 
-目前僅做文件化盤點，不連線或修改正式站台資料庫。
+目前僅做文件化盤點，不連線或修改正式站台資料庫。通訊錄整合採代理既有服務，不變更 `.240:8001` 原內容。
 
 ## Docker 化要求
 
@@ -23,6 +24,14 @@
 - 預留 `db` 與未來 `backup` 規劃。
 - 使用 `.env.example` 記錄必要環境變數。
 - 本機驗證需至少執行 `docker compose config`，skeleton 可啟動時執行 `docker compose up -d --build`。
+- `web` 需提供 `/health` 供容器健康檢查。
+
+## 本次整理紀錄
+
+- QR Code 列印新增 30mm x 30mm 標籤頁。
+- Docker/Nginx 新增 `/addressbook/` 代理既有通訊錄。
+- 新增 `.dockerignore` 與 compose healthcheck。
+- README 與 docs 補上通訊錄與 QR 列印規格。
 
 ## 後續階段建議
 
@@ -31,4 +40,3 @@
 - 進行 P3 資料表設計。
 - 進行 P4 API 設計。
 - 分階段重建前台、後台、Excel 匯出、權限登入、測試與備份。
-

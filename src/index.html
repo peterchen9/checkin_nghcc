@@ -11,19 +11,29 @@
         background: #f7f7f4;
         color: #202124;
       }
+
       main {
         max-width: 880px;
         margin: 0 auto;
         padding: 48px 24px;
       }
+
       h1 {
         margin: 0 0 12px;
         font-size: 32px;
       }
-      p {
+
+      p,
+      li {
         line-height: 1.7;
       }
-      .notice {
+
+      a {
+        color: #1558d6;
+      }
+
+      .notice,
+      .panel {
         margin-top: 24px;
         padding: 16px;
         border: 1px solid #d7d3c8;
@@ -35,11 +45,20 @@
     <main>
       <h1>教會智能報到系統</h1>
       <p>這是 checkin_nghcc 專案的 Docker skeleton，用於本機盤點、文件化與後續重建規劃。</p>
+
+      <section class="panel">
+        <h2>目前整理項目</h2>
+        <ul>
+          <li><a href="/qr-label-print.html">QR Code 30x30mm 標籤列印頁</a></li>
+          <li><a href="/addressbook/">既有通訊錄代理入口</a>，來源為 192.168.16.240:8001，只轉送使用，不修改原內容。</li>
+          <li><a href="/health">Docker health check</a></li>
+        </ul>
+      </section>
+
       <div class="notice">
         <strong>Production 保護：</strong>
-        目前不得連線或修改正式站台資料庫，也不得部署到 .240，除非後續有明確指令。
+        目前不得連線或修改正式站台資料庫，也不得部署到 .240，除非後續有明確指令。通訊錄整合僅代理既有服務，不覆寫、不遷移、不改資料。
       </div>
     </main>
   </body>
 </html>
-

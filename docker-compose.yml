@@ -1,3 +1,5 @@
+name: checkin_nghcc
+
 services:
   web:
     build:
@@ -9,6 +11,12 @@ services:
     environment:
       APP_ENV: "${APP_ENV:-local}"
       APP_NAME: "${APP_NAME:-checkin_nghcc}"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     restart: unless-stopped
 
   db:

@@ -6,9 +6,16 @@
 
 ## 建議服務
 
-- `web`：前後台應用服務。初期以 Nginx 提供靜態 skeleton，後續可改為前端 build 或後端 API 應用。
+- `web`：前後台應用服務。初期以 Nginx 提供靜態 skeleton，並代理既有通訊錄。
 - `db`：預留資料庫服務，建議使用 MySQL 或 PostgreSQL。
 - `backup`：預留備份服務，後續負責資料庫 dump、檔案備份與保留週期。
+
+## 目前 web 路由
+
+- `/`：專案 skeleton 首頁。
+- `/qr-label-print.html`：QR Code 30x30mm 標籤列印頁。
+- `/addressbook/`：代理到 `http://192.168.16.240:8001/`，只使用既有通訊錄，不修改內容。
+- `/health`：health check endpoint。
 
 ## 資料庫建議
 
@@ -54,6 +61,7 @@ docker compose --profile db up -d --build
 ## 未來 .240 部署注意事項
 
 - 不得在未經明確指令前部署到 `.240`。
+- 目前使用 `.240:8001` 的範圍僅限通訊錄代理，不修改該服務內容。
 - 部署前需確認 repo、branch、commit、環境變數、volume 路徑、備份策略與 rollback 步驟。
 - 部署前需確認不會覆蓋既有服務、port、reverse proxy 或資料庫。
 - production 環境不得使用 `.env.example` 的預設密碼。
