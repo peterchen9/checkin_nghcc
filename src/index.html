@@ -5,60 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>教會智能報到系統</title>
     <style>
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #f7f7f4;
-        color: #202124;
-      }
-
-      main {
-        max-width: 880px;
-        margin: 0 auto;
-        padding: 48px 24px;
-      }
-
-      h1 {
-        margin: 0 0 12px;
-        font-size: 32px;
-      }
-
-      p,
-      li {
-        line-height: 1.7;
-      }
-
-      a {
-        color: #1558d6;
-      }
-
-      .notice,
-      .panel {
-        margin-top: 24px;
-        padding: 16px;
-        border: 1px solid #d7d3c8;
-        background: #fff;
-      }
+      :root { color-scheme: light; --bg: #f6f7f9; --panel: #ffffff; --text: #1f2933; --muted: #5f6b7a; --line: #d9dee7; --brand: #166534; --brand-dark: #14532d; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--text); }
+      header { border-bottom: 1px solid var(--line); background: var(--panel); }
+      .wrap { width: min(1040px, calc(100% - 32px)); margin: 0 auto; }
+      .topbar { display: flex; justify-content: space-between; gap: 16px; align-items: center; min-height: 64px; }
+      .brand { font-size: 20px; font-weight: 700; }
+      nav { display: flex; flex-wrap: wrap; gap: 8px; }
+      a { color: var(--brand-dark); }
+      .nav-link, .button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 12px; border: 1px solid var(--line); background: var(--panel); color: var(--text); text-decoration: none; }
+      .button.primary { border-color: var(--brand); background: var(--brand); color: #fff; }
+      main { padding: 40px 0; }
+      h1 { margin: 0 0 12px; font-size: clamp(28px, 5vw, 42px); line-height: 1.15; }
+      h2 { margin: 0 0 10px; font-size: 20px; }
+      p { margin: 0; color: var(--muted); line-height: 1.7; }
+      .intro { max-width: 720px; margin-bottom: 28px; }
+      .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+      .card { min-height: 170px; padding: 18px; border: 1px solid var(--line); background: var(--panel); }
+      .card footer { margin-top: 18px; }
+      .status { margin-top: 24px; padding: 16px; border: 1px solid #f0d48a; background: #fff8e6; color: #56410f; line-height: 1.7; }
+      @media (max-width: 640px) { .topbar { align-items: flex-start; flex-direction: column; padding: 14px 0; } nav, .nav-link, .button { width: 100%; } }
     </style>
   </head>
   <body>
-    <main>
-      <h1>教會智能報到系統</h1>
-      <p>這是 checkin_nghcc 專案的 Docker skeleton，用於本機盤點、文件化與後續重建規劃。</p>
-
-      <section class="panel">
-        <h2>目前整理項目</h2>
-        <ul>
-          <li><a href="/qr-label-print.html">QR Code 30x30mm 標籤列印頁</a></li>
-          <li><a href="/addressbook/">既有通訊錄代理入口</a>，來源為 192.168.16.240:8001，只轉送使用，不修改原內容。</li>
-          <li><a href="/health">Docker health check</a></li>
-        </ul>
+    <header><div class="wrap topbar"><div class="brand">教會智能報到系統</div><nav aria-label="主要功能"><a class="nav-link" href="/admin.html">管理台</a><a class="nav-link" href="/qr-label-print.html">QR 標籤列印</a><a class="nav-link" href="/addressbook/">通訊錄</a><a class="nav-link" href="/health">健康檢查</a></nav></div></header>
+    <main class="wrap">
+      <section class="intro"><h1>報到、QR 標籤與後台入口</h1><p>這個 Docker 站台目前提供智能報到系統的靜態入口、30x30mm QR 標籤列印工具，並透過 Nginx 將通訊錄功能代理到內網服務。</p><div class="actions"><a class="button primary" href="/admin.html">進入管理台</a><a class="button" href="/qr-label-print.html">列印 QR 標籤</a></div></section>
+      <section class="grid" aria-label="功能清單">
+        <article class="card"><h2>管理台</h2><p>集中放置報到管理、資料匯出與通訊錄入口，避免使用者進入不存在的頁面。</p><footer><a href="/admin.html">開啟管理台</a></footer></article>
+        <article class="card"><h2>QR 標籤列印</h2><p>支援網址、標題與副標題輸入，列印版面固定為 30mm x 30mm。</p><footer><a href="/qr-label-print.html">開啟列印工具</a></footer></article>
+        <article class="card"><h2>通訊錄</h2><p>透過 <code>/addressbook/</code> 代理到 <code>192.168.16.240:8001</code>。</p><footer><a href="/addressbook/">開啟通訊錄</a></footer></article>
+        <article class="card"><h2>Docker 健康檢查</h2><p>容器 healthcheck 使用 <code>/health</code>，回傳 <code>ok</code> 代表 Nginx 正常。</p><footer><a href="/health">檢查狀態</a></footer></article>
       </section>
-
-      <div class="notice">
-        <strong>Production 保護：</strong>
-        目前不得連線或修改正式站台資料庫，也不得部署到 .240，除非後續有明確指令。通訊錄整合僅代理既有服務，不覆寫、不遷移、不改資料。
-      </div>
+      <section class="status" aria-label="部署提醒">目前版本是 Docker skeleton 與功能入口整理；實際報到 API、登入、資料庫寫入與 production 資料遷移尚未在此 repo 實作。</section>
     </main>
   </body>
 </html>
